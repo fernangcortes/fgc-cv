@@ -47,17 +47,9 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { Search } from "lucide-react";
+import { isMatch } from "../utils/search";
 
-const removeAccents = (str: string) => {
-  return str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
-};
 
-const isMatch = (item: any, query: string): boolean => {
-  if (!query) return true;
-  const q = removeAccents(query.toLowerCase());
-  const str = removeAccents(JSON.stringify(item).toLowerCase());
-  return str.includes(q);
-};
 
 export default function DevOrganizer() {
   const [user, setUser] = useState<any>(null);

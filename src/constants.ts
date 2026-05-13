@@ -1,4 +1,4 @@
-import { ExperienceItem, Project, FilmEntry, EducationEntry, CourseEntry, SkillCategory, ProductionCategory } from './types';
+import { ExperienceItem, ProjectEntry, ProjectGroup, FilmEntry, EducationEntry, CourseEntry, SkillCategory, ProductionCategory } from './types';
 
 export const PERSONAL_INFO = {
   name: "FERNANDO GOMES CÔRTES",
@@ -939,17 +939,17 @@ export const PRODUCTIONS: ProductionCategory[] = [
 ];
 
 export const AUDIOVISUAL_CONFIG = [
-  { id: "cinema", title: "Cinema - Longa", data: CINEMA_LONGA },
-  { id: "cinema", title: "Cinema - Curta", data: CINEMA_CURTA },
-  { id: "cinema", title: "Filmography", data: FILMOGRAPHY },
-  { id: "jornalismo", title: "Jornalismo - Grande Reportagem", data: JORNALISMO_GRANDE_REPORTAGEM },
-  { id: "jornalismo", title: "Jornalismo - Reportagem", data: JORNALISMO_REPORTAGEM },
-  { id: "jornalismo", title: "Jornalismo - Série", data: JORNALISMO_SERIE },
-  { id: "jornalismo", title: "Documentários", data: DOCUMENTARIES },
-  { id: "programa", title: "Programa de TV", data: PROGRAMA_TV },
+  { id: "cinema_longa", title: "Cinema - Longa", data: CINEMA_LONGA },
+  { id: "cinema_curta", title: "Cinema - Curta", data: CINEMA_CURTA },
+  { id: "filmography", title: "Filmography", data: FILMOGRAPHY },
+  { id: "jornalismo_grande", title: "Jornalismo - Grande Reportagem", data: JORNALISMO_GRANDE_REPORTAGEM },
+  { id: "jornalismo_reportagem", title: "Jornalismo - Reportagem", data: JORNALISMO_REPORTAGEM },
+  { id: "jornalismo_serie", title: "Jornalismo - Série", data: JORNALISMO_SERIE },
+  { id: "documentarios", title: "Documentários", data: DOCUMENTARIES },
+  { id: "programa_tv", title: "Programa de TV", data: PROGRAMA_TV },
   { id: "institucional", title: "Institucional", data: INSTITUCIONAL },
-  { id: "transmissao", title: "Transmissão - Eventos", data: TRANSMISSAO_EVENTOS },
-  { id: "transmissao", title: "Transmissão - Shows", data: TRANSMISSAO_SHOWS },
+  { id: "transmissao_eventos", title: "Transmissão - Eventos", data: TRANSMISSAO_EVENTOS },
+  { id: "transmissao_shows", title: "Transmissão - Shows", data: TRANSMISSAO_SHOWS },
   { id: "videoaulas", title: "Videoaulas - Goiás Tec", data: TRANSMISSAO_VIDEOAULAS },
   { id: "clipes", title: "Clipes Musicais", data: MUSIC_VIDEOS },
-];
+].filter(cat => cat.data.length > 0);

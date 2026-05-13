@@ -1,6 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* 
+ * Global styles for FGC-CV Portfolio
+ * Note: Tailwind CSS is loaded via CDN in index.html, not via PostCSS.
+ * Do NOT add @tailwind directives here — they require PostCSS processing.
+ */
 
 :root {
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -14,11 +16,25 @@ body {
   min-height: 100vh;
 }
 
-/* Custom scrollbar hiding if needed */
+/* Hide scrollbar utility */
+body, html {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+body::-webkit-scrollbar, html::-webkit-scrollbar {
+  display: none;
+}
+
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Print styles */
+@media print {
+  .animate-in { animation: none !important; }
+  .space-y-12, .space-y-16 { display: block !important; margin-bottom: 2rem; }
 }
