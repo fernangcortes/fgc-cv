@@ -29,7 +29,7 @@ export function GuidedTour({ run, onFinish }: GuidedTourProps) {
     },
     {
       target: '.tour-step-search',
-      content: 'Você pode buscar rapidamente por habilidades, projetos ou ferramentas em todo o portfólio.',
+      content: 'Use a barra de pesquisa para encontrar rapidamente habilidades, trabalhos, projetos ou ferramentas em todo o portfólio.',
       disableBeacon: true,
     },
     {
@@ -46,7 +46,7 @@ export function GuidedTour({ run, onFinish }: GuidedTourProps) {
 
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { status, action } = data;
-    
+
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status as any)) {
       onFinish();
     } else if (action === 'close') {

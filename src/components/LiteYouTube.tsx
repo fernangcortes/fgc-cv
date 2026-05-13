@@ -99,10 +99,10 @@ const LiteYouTube: React.FC<LiteYouTubeProps> = ({ url, title, className = '' })
             className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-600/90 hover:bg-emerald-500 backdrop-blur-sm text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 transform group-hover:scale-110">
-              <Play className="w-4 h-4 sm:w-5 sm:h-5 ml-1" fill="currentColor" />
+          <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-300"></div>
+          <div className="absolute bottom-2 right-2">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-emerald-600/90 hover:bg-emerald-500 backdrop-blur-sm text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 transform group-hover:scale-110">
+              <Play className="w-3 h-3 sm:w-4 sm:h-4 ml-0.5" fill="currentColor" />
             </div>
           </div>
         </div>
