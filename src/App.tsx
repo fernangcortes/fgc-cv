@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Search,
   Mail,
@@ -29,7 +29,6 @@ import {
   PRODUCTIONS,
   AUDIOVISUAL_CONFIG,
 } from "./constants";
-import { ExperienceItem, ProjectEntry, ProjectGroup, FilmEntry, EducationEntry, CourseEntry, SkillCategory, ProductionCategory } from './types';
 import SkillBadge from "./components/SkillBadge";
 import Section from "./components/Section";
 import ExperienceCard from "./components/ExperienceCard";
@@ -39,10 +38,9 @@ import DevOrganizer from "./components/DevOrganizer";
 import AudiovisualSection from "./components/AudiovisualSection";
 import AIPitchAgent from "./components/AIPitchAgent";
 import { GuidedTour } from "./components/GuidedTour";
-import { WorkItem, Category } from "./types";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "./lib/firebase";
-import { isMatch } from "./utils/search";
+import { useTheme } from "./hooks/useTheme";
+import { useSearch } from "./hooks/useSearch";
+import { useFirestoreData } from "./hooks/useFirestoreData";
 
 type TabId =
   | "visao-geral"
@@ -91,30 +89,21 @@ const TABS: TabDefinition[] = [
   },
 ];
 
-// Search utilities imported from ./utils/search
-
 const App: React.FC = () => {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem('theme') === 'dark' || 
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  });
+  // --- Hooks ---
+  const { isDarkMode, toggleTheme } = useTheme();
+  const {
+    searchQuery, setSearchQuery, hasSearch,
+    filteredExperience, filteredPortfolio, filteredAudiovisual,
+    audiovisualHasSearch, filteredEducation, filteredSkills, filteredCourses,
+  } = useSearch();
+  const { dbWorks, dbCategories, worksInResume, dbUniqueCategories, dbUniqueGroups } = useFirestoreData();
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDarkMode]);
-
-  const [searchQuery, setSearchQuery] = useState("");
+  // --- Local UI state ---
   const [showPrintHint, setShowPrintHint] = useState(false);
   const [activeTab, setActiveTab] = useState<TabId>(() => {
     return (sessionStorage.getItem("activeTab") as TabId) || "visao-geral";
   });
-
   useEffect(() => {
     sessionStorage.setItem("activeTab", activeTab);
   }, [activeTab]);
@@ -124,67 +113,6 @@ const App: React.FC = () => {
   >("all");
   const [isSummaryExpanded, setIsSummaryExpanded] = useState(false);
   const [runTour, setRunTour] = useState(false);
-
-  const [dbWorks, setDbWorks] = useState<WorkItem[]>([]);
-  const [dbCategories, setDbCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    const unsubWorks = onSnapshot(collection(db, "works"), (snap) =>
-      setDbWorks(snap.docs.map((d) => ({ ...d.data(), id: d.id }) as WorkItem)),
-    );
-    const unsubCats = onSnapshot(collection(db, "categories"), (snap) =>
-      setDbCategories(
-        snap.docs.map((d) => ({ ...d.data(), id: d.id }) as Category),
-      ),
-    );
-    return () => {
-      unsubWorks();
-      unsubCats();
-    };
-  }, []);
-
-  const filteredExperience = EXPERIENCE.filter((exp) =>
-    isMatch(exp, searchQuery),
-  );
-  const filteredPortfolio = PORTFOLIO_GROUPS.map((g) => ({
-    ...g,
-    projects: g.projects.filter((p) => isMatch(p, searchQuery)),
-  })).filter((g) => isMatch(g.category, searchQuery) || g.projects.length > 0);
-  
-  const filteredAudiovisual = useMemo(() => {
-    return AUDIOVISUAL_CONFIG.map(category => ({
-      ...category,
-      filteredData: category.data.filter(item => isMatch(item, searchQuery))
-    })).filter(cat => cat.filteredData.length > 0);
-  }, [searchQuery]);
-
-  const audiovisualHasSearch = filteredAudiovisual.length > 0;
-
-  const filteredEducation = EDUCATION.filter((e) => isMatch(e, searchQuery));
-  const filteredSkills = SKILLS.map((g) => ({
-    ...g,
-    skills: g.skills.filter((s) => isMatch(s, searchQuery)),
-  })).filter((g) => isMatch(g.category, searchQuery) || g.skills.length > 0);
-  const filteredCourses = COURSES.filter((c) => isMatch(c, searchQuery));
-
-  const worksInResume = dbWorks.filter((w) => w.inResume);
-  const dbUniqueCategories = Array.from(
-    new Set(
-      worksInResume.flatMap((w) =>
-        w.category ? w.category.split(",").map((c) => c.trim()).filter(Boolean) : []
-      )
-    )
-  ).sort();
-
-  const dbUniqueGroups = Array.from(
-    new Set(
-      worksInResume.flatMap((w) =>
-        w.group ? w.group.split(",").map((g) => g.trim()).filter(Boolean) : []
-      )
-    )
-  ).sort();
-
-  const hasSearch = searchQuery.trim().length > 0;
 
   const handlePrint = () => {
     window.print();
@@ -268,7 +196,7 @@ const App: React.FC = () => {
                 <div className="relative group">
                   <button
                     type="button"
-                    onClick={() => setIsDarkMode(!isDarkMode)}
+                    onClick={() => toggleTheme()}
                     className="w-10 h-10 flex items-center justify-center bg-stone-900 dark:bg-zinc-950 text-white hover:bg-black transition-colors shadow-sm cursor-pointer select-none active:bg-stone-800 dark:bg-zinc-200 rounded-lg dark:border dark:border-white/5"
                     aria-label="Alternar Tema Escuro"
                   >
