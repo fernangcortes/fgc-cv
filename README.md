@@ -1,67 +1,60 @@
-# Currículo/Portfólio Interativo - White Label Template
+# Currículo/Portfólio Interativo (FGC-CV)
 
-Este repositório contém uma aplicação React + Vite criada e otimizada para ser um currículo e portfólio interativo potente e veloz. Originalmente desenvolvido por Fernando Gomes Côrtes, este template pode ser facilmente customizado (estilo "white-label") para servir de base para o seu próprio currículo profissional.
+Este repositório contém a versão mais recente e modularizada do currículo e portfólio interativo de **Fernando Gomes Côrtes**. Criada com React + Vite, a aplicação foi otimizada para oferecer uma experiência veloz, responsiva e tecnologicamente avançada para recrutadores e parceiros.
 
-## 🚀 Principais Features
+## 🔗 Links Oficiais
+- **Site Live**: [https://fgc-cv.vercel.app/](https://fgc-cv.vercel.app/)
+- **Repositório**: [https://github.com/fernangcortes/fgc-cv](https://github.com/fernangcortes/fgc-cv)
 
-- **Assistente de IA Integrado (AIPitchAgent)**: Responde dúvidas dos recrutadores baseando-se no seu portfólio.
-- **Tour Guiado (React Joyride)**: Apresenta os recursos fundamentais logo na primeira visita.
-- **Divisão em Módulos**: Abas organizadas para Dev, Audiovisual, Educação e Experiência.
-- **Lightbox de Imagens e Player YouTube Otimizado**: Carregamento rápido de portfólio em vídeo/foto sem prejudicar o tempo de renderização.
-- **Busca por Contexto e Fuzzy**: Digite habilidades, empresas ou nomes de projetos para instantaneamente filtrar todo o site.
-- **Grupos Inteligentes**: Botões e filtros para agrupar projetos em conjunto.
-- **Dashboard e Impressão Amigável**: Quando em modo \`print\` (Ctrl/Cmd+P), o site vira um currículo tradicional pronto para PDF!
+## 🚀 Novas Funcionalidades e Melhorias Técnicas
 
-## ⚙️ Como customizar para você
+- **Arquitetura Modular em `src/`**: Todo o código foi reorganizado em componentes independentes, tipos TypeScript e constantes centralizadas para facilitar a manutenção e escalabilidade.
+- **Gráfico de Habilidades Dinâmico (Recharts)**: Visualização profissional das competências técnicas utilizando gráficos de barras responsivos, integrados ao sistema de temas (Dark/Light).
+- **Tour Guiado Aprimorado (React Joyride)**: Sistema de onboarding que guia o usuário pelas principais funcionalidades. 
+    - *Update*: Agora o tour pode ser reiniciado quantas vezes o usuário desejar e os "beacons" (bolinhas piscantes) foram removidos para uma interface mais limpa.
+- **Assistente de IA Integrado (AIPitchAgent)**: Chatbot inteligente que utiliza a API do Google Gemini para responder perguntas sobre o portfólio com base em um contexto dinâmico.
+- **Busca Global por Contexto (Fuzzy Search)**: Filtro inteligente que permite encontrar projetos, empresas ou habilidades instantaneamente em todo o site.
+- **Modo de Impressão Profissional**: CSS dedicado que transforma o site em um currículo tradicional A4 otimizado para PDF ao pressionar `Ctrl+P`.
+- **Lightbox e Player Otimizado**: Visualização de portfólio audiovisual sem perda de performance.
 
-A lógica principal de dados é estática, puxada através de variáveis (no modo local) sem depender diretamente do Firebase ou de APIs complexas. Para colocar seus dados:
+## 🛠️ Tecnologias Utilizadas
 
-### 1. Dados Pessoais
+- **Core**: React 18, Vite, TypeScript
+- **Estilização**: Tailwind CSS (via CDN para agilidade)
+- **Visualização de Dados**: Recharts
+- **UX/Onboarding**: React Joyride
+- **IA**: Google Gemini Pro (via SDK da Google)
+- **Hospedagem**: Vercel
 
-Caminho: \`constants.ts\`
-Ao abrir o arquivo \`constants.ts\`, procure por \`PERSONAL_INFO\`.
-Edite as propriedades \`name\`, \`role\`, \`summary\`, \`location\`, \`email\`, e \`links\` com as suas URLs.
+## ⚙️ Estrutura do Projeto
 
-### 2. Dados de Portfólio, Cursos e Trabalhos
-Caminho Principal: \`constants.ts\` e \`new_data.json\`.
+```bash
+src/
+├── components/     # Componentes modulares (Tour, Chat IA, Gráficos, etc.)
+├── constants.ts    # Central de dados (Onde você edita suas informações)
+├── types.ts        # Definições de tipos TypeScript
+├── App.tsx         # Componente principal e lógica de estado
+└── main.tsx        # Ponto de entrada da aplicação
+```
 
-A maior parte da sua experiência pode ser configurada no \`constants.ts\` em forma de constantes (como \`EXPERIENCE\`, \`COURSES\`, \`SKILLS\`, etc).
+## 📦 Como Desenvolver Localmente
 
-Para o grande portfólio de vídeos/filmes organizados, o aplicativo consome arquivos JSON como \`new_data.json\` ou os importa estaticamente através de mapas no \`constants.ts\`.
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/fernangcortes/fgc-cv.git
+   ```
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
 
-Basta trocar:
-- \`title\`: Nome da Obra/Projeto
-- \`role\`: O que você fez (ex: "Desenvolvedor Backend", "Editor de Vídeo")
-- \`type\`: Categoria exata (Isso alimenta automaticamente as abas baseadas em tipo no componente **Audiovisual**)
-- \`url\`: URL para vídeos do Youtube ou sites externos
-- \`group\` *(opcional)*: Um apelido usado para forçar um agrupamento daquela marca no Portfólio (Por exemplo, \`group: "O Boticário"\` puxa todas as obras).
+## 🤖 Configuração da IA
 
-### 3. Modificando os Ícones e Tema
-O site usa o **Tailwind CSS** (\`bg-stone-50\`, \`emerald-500\`, etc.), suportando "Dark Mode" automaticamente seguindo o sistema.
-Os ícones vêm da biblioteca **Lucide React**. É só importar um novo ícone no componente escolhido e substituir na matriz.
+Para que o assistente funcione, você deve configurar a variável de ambiente `GEMINI_API_KEY` no seu painel da Vercel ou criar um arquivo `.env` local com a sua chave.
 
-## 🤖 Configurando sua IA
-
-Para que o chatbot conheça o SEU currículo:
-1. Ao atualizar o \`constants.ts\` e \`new_data.json\`, os dados são passados como contexto via props no arquivo \`App.tsx\` para \`<AIPitchAgent contextData={JSON.stringify(...)} />\`.
-2. Garanta que você configurou uma chava de API válida do **Google Gemini API** (\`process.env.GEMINI_API_KEY\`) no console de deploy do seu ambiente.
-3. Se desejar, afine as regras de prompt (Instrução de Sistema) dentro do arquivo \`components/AIPitchAgent.tsx\` no parâmetro \`systemInstruction\`.
-
-## 📦 Desenvolvimento Local
-
-Abra o seu terminal:
-
-\`\`\`bash
-# Instale os pacotes principais e dependências locais
-npm install
-
-# Inicie o servidor de desenvolvimento Vite
-npm run dev
-\`\`\`
-
-## O que é esse Tour Guiado?
-Na 1ª visita à sua landing page de currículo, os visitantes e recrutadores verão um *Tour* chamativo os ensinando como procurar pelas suas skills. Usando \`localStorage\`, nós guardamos essa interação para que ele só rode uma vez.
-
-Sinta-se à vontade para "forkar" (Fork), mexer à vontade, e não se esqueça de hospedar na vercel ou no Google Cloud Run!
-
-Feito com 💚.
+---
+Feito com 💚 por Fernando Gomes Côrtes.

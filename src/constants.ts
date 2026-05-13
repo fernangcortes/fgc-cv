@@ -304,7 +304,7 @@ export const PORTFOLIO_GROUPS: ProjectGroup[] = [
         name: "Currículo FGC",
         year: "2026",
         description: "Motor web por trás deste portfólio dinâmico interativo e responsivo estilo SPA.",
-        url: "https://github.com/fernangcortes/Curriculo-fgc"
+        url: "https://github.com/fernangcortes/fgc-cv"
       },
       {
         name: "CapIAu OS: Módulo 360°",
