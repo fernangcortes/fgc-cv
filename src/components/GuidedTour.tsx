@@ -8,11 +8,11 @@ interface GuidedTourProps {
 }
 
 export function GuidedTour({ run, onFinish, setActiveTab }: GuidedTourProps) {
-  const [tourKey, setTourKey] = useState(0);
+  const [stepIndex, setStepIndex] = useState(0);
 
   useEffect(() => {
     if (run) {
-      setTourKey(prev => prev + 1);
+      setStepIndex(0);
     }
   }, [run]);
 
@@ -43,20 +43,31 @@ export function GuidedTour({ run, onFinish, setActiveTab }: GuidedTourProps) {
   const handleJoyrideCallback = (data: EventData) => {
     const { status, action, index, type } = data;
 
-    if (type === 'step:before' && index === 3 && setActiveTab) {
-      setActiveTab('audiovisual');
-    }
-
     if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
       onFinish();
+      setStepIndex(0);
+      return;
     } else if (action === 'close') {
       onFinish();
+      setStepIndex(0);
+      return;
+    }
+
+    if (type === 'step:after' || type === 'error') {
+      const nextIndex = index + (action === 'prev' ? -1 : 1);
+      
+      if (nextIndex === 3 && setActiveTab) {
+        setActiveTab('audiovisual');
+        setTimeout(() => setStepIndex(nextIndex), 50);
+      } else {
+        setStepIndex(nextIndex);
+      }
     }
   };
 
   return (
     <Joyride
-      key={tourKey}
+      stepIndex={stepIndex}
       onEvent={handleJoyrideCallback}
       continuous
       run={run}
