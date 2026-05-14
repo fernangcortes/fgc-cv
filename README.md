@@ -10,22 +10,27 @@ Este repositório contém a versão mais recente e modularizada do currículo e 
 ## 🚀 Funcionalidades e Diferenciais Técnicos
 
 ### 1. Pesquisa Inteligente com Autocomplete
+
 - **Busca Global**: Um sistema de filtro que varre habilidades, empresas, projetos e ferramentas instantaneamente.
 - **Sugestões Dinâmicas**: Utiliza um `<datalist>` gerado dinamicamente a partir dos seus dados reais, oferecendo sugestões de busca conforme o usuário digita.
 - **Acessibilidade**: Implementado com padrões de formulário (ID/Name) para suporte total a navegadores.
 
 ### 2. Tour Guiado Inteligente (React Joyride v3)
+
 - **Onboarding Controlado**: Um tour passo a passo que explica as seções do site.
 - **Troca Automática de Contexto**: O tour é inteligente o suficiente para trocar de abas automaticamente (ex: muda da "Visão Geral" para "Audiovisual") para mostrar elementos que só existem em visualizações específicas, garantindo que o usuário nunca perca um passo.
 
 ### 3. Assistente de IA (AIPitchAgent)
+
 - **Contexto Completo**: Integrado ao Google Gemini Pro, o assistente possui todo o seu currículo como "memória de curto prazo".
 - **Sugestões Personalizadas**: Capaz de sugerir projetos específicos baseados na intenção do recrutador (ex: "Mostre-me projetos de edição de vídeo").
 
 ### 4. Gestão de Dados (DevOrganizer)
+
 - **Migração para Nuvem**: Sistema interno para gerenciar e migrar constantes locais para o Firebase Cloud Firestore, permitindo edições dinâmicas no futuro.
 
 ### 5. Modo de Impressão e Design
+
 - **Dark Mode Nativo**: Interface baseada em tons de zinco e esmeralda para conforto visual.
 - **Print Friendly**: Ao pressionar `Ctrl+P`, o site se reorganiza em um layout de currículo clássico A4, otimizado para leitura e exportação para PDF.
 
@@ -55,19 +60,26 @@ src/
 ## 📦 Como Desenvolver Localmente
 
 1. **Clone o repositório**:
+
    ```bash
    git clone https://github.com/fernangcortes/fgc-cv.git
    ```
+
 2. **Instale as dependências**:
+
    ```bash
    npm install
    ```
+
 3. **Configure o Ambiente**:
    Crie um arquivo `.env` com sua chave:
+
    ```env
    VITE_GEMINI_API_KEY=sua_chave_aqui
    ```
+
 4. **Inicie o servidor**:
+
    ```bash
    npm run dev
    ```
