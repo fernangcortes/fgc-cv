@@ -4,9 +4,10 @@ import { Joyride, STATUS, Step, EventData } from 'react-joyride';
 interface GuidedTourProps {
   run: boolean;
   onFinish: () => void;
+  setActiveTab?: (tab: 'visao-geral' | 'experiencia' | 'audiovisual' | 'laboratorio') => void;
 }
 
-export function GuidedTour({ run, onFinish }: GuidedTourProps) {
+export function GuidedTour({ run, onFinish, setActiveTab }: GuidedTourProps) {
   const [tourKey, setTourKey] = useState(0);
 
   useEffect(() => {
@@ -40,7 +41,11 @@ export function GuidedTour({ run, onFinish }: GuidedTourProps) {
   ];
 
   const handleJoyrideCallback = (data: EventData) => {
-    const { status, action } = data;
+    const { status, action, index, type } = data;
+
+    if (type === 'step:before' && index === 3 && setActiveTab) {
+      setActiveTab('audiovisual');
+    }
 
     if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
       onFinish();

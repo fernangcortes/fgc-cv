@@ -137,7 +137,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen relative bg-[#faf9f6] dark:bg-[#050505] text-stone-600 dark:text-zinc-300 selection:bg-stone-200 dark:bg-zinc-700 dark:selection:bg-emerald-900/40 selection:text-stone-900 dark:text-white dark:selection:text-emerald-200 print:bg-white print:text-black">
-      <GuidedTour run={runTour} onFinish={() => setRunTour(false)} />
+      <GuidedTour run={runTour} onFinish={() => setRunTour(false)} setActiveTab={setActiveTab} />
       <div className="fixed inset-0 pointer-events-none bg-grid opacity-[0.03] dark:opacity-[0.05] z-0 print:hidden"></div>
 
       <main className="relative z-10 max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-16 print:py-0 print:px-0 print:max-w-full">
