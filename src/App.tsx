@@ -115,6 +115,20 @@ const App: React.FC = () => {
   const [isSummaryExpanded, setIsSummaryExpanded] = useState(false);
   const [runTour, setRunTour] = useState(false);
 
+  const searchSuggestions = React.useMemo(() => {
+    const suggestions = new Set<string>();
+    
+    SKILLS.forEach(g => g.skills.forEach(s => suggestions.add(s.name)));
+    EXPERIENCE.forEach(e => {
+      if (e.company) suggestions.add(e.company);
+      if (e.role) suggestions.add(e.role);
+    });
+    dbUniqueGroups.forEach(g => suggestions.add(g));
+    dbUniqueCategories.forEach(c => suggestions.add(c));
+    
+    return Array.from(suggestions).filter(Boolean).sort();
+  }, [dbUniqueGroups, dbUniqueCategories]);
+
   const handlePrint = () => {
     window.print();
     setShowPrintHint(true);
@@ -292,12 +306,21 @@ const App: React.FC = () => {
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400 dark:text-zinc-500" />
               <input
+                id="search-input"
+                name="searchQuery"
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Pesquisar por competência, empresa, projeto..."
+                list="search-suggestions"
+                autoComplete="on"
                 className="w-full bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-stone-200 dark:border-white/10 rounded-xl py-3 pl-12 pr-4 text-stone-600 dark:text-zinc-300 placeholder:text-stone-400 dark:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all shadow-sm"
               />
+              <datalist id="search-suggestions">
+                {searchSuggestions.map((suggestion, idx) => (
+                  <option key={idx} value={suggestion} />
+                ))}
+              </datalist>
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
@@ -786,6 +809,7 @@ const App: React.FC = () => {
                     );
                   })}
                   {dbUniqueGroups.map((grp) => {
+                    if (hasSearch) return null; // Skip redundant standalone groups during search to avoid duplicates
                     const items = worksInResume.filter(
                       (w) =>
                         w.group &&

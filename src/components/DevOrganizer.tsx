@@ -255,42 +255,43 @@ export default function DevOrganizer() {
 
                       for (const { items, cat, sub } of arraysToMigrate) {
                         for (const item of items || []) {
+                          const it = item as any;
                           // Check if it exists
                           const exists = works.find(
                             (w) =>
                               w.title.toLowerCase() ===
                               (
-                                item.title ||
-                                item.movie ||
-                                item.name ||
+                                it.title ||
+                                it.movie ||
+                                it.name ||
                                 ""
                               ).toLowerCase(),
                           );
                           if (!exists) {
                             const toSave: any = {
                               title: String(
-                                item.title || item.movie || item.name || "",
+                                it.title || it.movie || it.name || "",
                               ),
                               category: cat,
-                              year: String(item.year || ""),
-                              role: String(item.role || ""),
+                              year: String(it.year || ""),
+                              role: String(it.role || ""),
                               description: String(
-                                item.description ||
-                                  item.festival ||
-                                  item.producer ||
+                                it.description ||
+                                  it.festival ||
+                                  it.producer ||
                                   "",
                               ),
                               subCategory: sub,
                               url: String(
-                                item.url ||
-                                  item.links?.[0]?.url ||
-                                  item.videoUrl ||
+                                it.url ||
+                                  it.links?.[0]?.url ||
+                                  it.videoUrl ||
                                   "",
                               ),
-                              images: Array.isArray(item.images)
-                                ? item.images.map(String)
-                                : item.image
-                                  ? [String(item.image)]
+                              images: Array.isArray(it.images)
+                                ? it.images.map(String)
+                                : it.image
+                                  ? [String(it.image)]
                                   : [],
                               inResume: true,
                               createdAt: Date.now(),
