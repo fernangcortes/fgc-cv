@@ -31,7 +31,7 @@ const levenshtein = (a: string, b: string): number => {
  * Fuzzy match an item against a search query.
  * Serializes the item to JSON and checks for substring or Levenshtein matches.
  */
-export const isMatch = (item: any, query: string): boolean => {
+export function searchMatch(item: any, query: string): boolean {
   if (!query) return true;
   const q = removeAccents(query.toLowerCase());
   const str = removeAccents(JSON.stringify(item).toLowerCase());
@@ -51,4 +51,4 @@ export const isMatch = (item: any, query: string): boolean => {
       return levenshtein(qw, sw) <= maxDist;
     });
   });
-};
+}

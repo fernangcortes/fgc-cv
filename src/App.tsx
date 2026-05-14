@@ -41,6 +41,7 @@ import { GuidedTour } from "./components/GuidedTour";
 import { useTheme } from "./hooks/useTheme";
 import { useSearch } from "./hooks/useSearch";
 import { useFirestoreData } from "./hooks/useFirestoreData";
+import { searchMatch } from "./utils/search";
 
 type TabId =
   | "visao-geral"
@@ -681,7 +682,7 @@ const App: React.FC = () => {
             : audiovisualHasSearch ||
               (dbWorks &&
                 dbWorks.length > 0 &&
-                dbWorks.some((w) => isMatch(w, searchQuery)))) && (
+                dbWorks.some((w) => searchMatch(w, searchQuery)))) && (
             <div className="space-y-6 animate-in fade-in duration-500 print:block">
               {worksInResume.length > 0 ? (
                 <>
@@ -766,7 +767,7 @@ const App: React.FC = () => {
                       (w) =>
                         w.category &&
                         w.category.split(',').map(c => c.trim()).includes(cat) &&
-                        (hasSearch ? isMatch(w, searchQuery) : true)
+                        (hasSearch ? searchMatch(w, searchQuery) : true)
                     );
                     if (items.length === 0) return null;
                     if (
@@ -789,7 +790,7 @@ const App: React.FC = () => {
                       (w) =>
                         w.group &&
                         w.group.split(',').map(g => g.trim()).includes(grp) &&
-                        (hasSearch ? isMatch(w, searchQuery) : true)
+                        (hasSearch ? searchMatch(w, searchQuery) : true)
                     );
                     if (items.length === 0) return null;
                     if (

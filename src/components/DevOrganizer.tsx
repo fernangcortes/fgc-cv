@@ -47,7 +47,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { Search } from "lucide-react";
-import { isMatch } from "../utils/search";
+import { searchMatch } from "../utils/search";
 
 
 
@@ -386,7 +386,7 @@ export default function DevOrganizer() {
                         let matchFilter = true;
                         if (filterInResume === "yes") matchFilter = w.inResume === true;
                         if (filterInResume === "no") matchFilter = w.inResume !== true;
-                        return matchFilter && isMatch(w, devSearchQuery);
+                        return matchFilter && searchMatch(w, devSearchQuery);
                       });
                       if (e.target.checked) {
                         setSelectedWorks(filteredWorks.map((w) => w.id));
@@ -399,13 +399,13 @@ export default function DevOrganizer() {
                         let matchFilter = true;
                         if (filterInResume === "yes") matchFilter = w.inResume === true;
                         if (filterInResume === "no") matchFilter = w.inResume !== true;
-                        return matchFilter && isMatch(w, devSearchQuery);
+                        return matchFilter && searchMatch(w, devSearchQuery);
                       }).length > 0 &&
                       works.filter((w) => {
                         let matchFilter = true;
                         if (filterInResume === "yes") matchFilter = w.inResume === true;
                         if (filterInResume === "no") matchFilter = w.inResume !== true;
-                        return matchFilter && isMatch(w, devSearchQuery);
+                        return matchFilter && searchMatch(w, devSearchQuery);
                       }).every((w) => selectedWorks.includes(w.id))
                     }
                   />
@@ -430,7 +430,7 @@ export default function DevOrganizer() {
                 let matchFilter = true;
                 if (filterInResume === "yes") matchFilter = w.inResume === true;
                 if (filterInResume === "no") matchFilter = w.inResume !== true;
-                return matchFilter && isMatch(w, devSearchQuery);
+                return matchFilter && searchMatch(w, devSearchQuery);
               }).length === 0 ? (
                 <div className="p-8 text-center text-stone-400 dark:text-zinc-500 font-medium">
                   {devSearchQuery ? 'Nenhum trabalho encontrado para a busca atual.' : 'Nenhum trabalho encontrado para este filtro.'}
@@ -441,7 +441,7 @@ export default function DevOrganizer() {
                     let matchFilter = true;
                     if (filterInResume === "yes") matchFilter = w.inResume === true;
                     if (filterInResume === "no") matchFilter = w.inResume !== true;
-                    return matchFilter && isMatch(w, devSearchQuery);
+                    return matchFilter && searchMatch(w, devSearchQuery);
                   })
                   .map((w) => (
                     <div
