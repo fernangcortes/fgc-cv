@@ -31,7 +31,7 @@ export function GuidedTour({ run, onFinish }: GuidedTourProps) {
     },
     {
       target: '.tour-step-filters',
-      content: 'Filtre as obras por tipos específicos, ou encontre agrupadamente por projeto nos botões de filtro e "Grupos ▾".',
+      content: 'Filtre as obras por tipos específicos, ou encontre agrupadamente por projeto nos botões de filtro e "Grupos".',
     },
     {
       target: '.tour-step-ai',
